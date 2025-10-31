@@ -66,8 +66,8 @@ public class CheckoutPanel extends JPanel {
         
         // Initialize buttons
         placeOrderBtn = new JButton("Place Order");
-        placeOrderBtn.setBackground(new Color(0, 128, 0)); // Green
-        placeOrderBtn.setForeground(Color.WHITE);
+        placeOrderBtn.setBackground(new Color(204, 85, 0)); // Darker orange for better contrast
+        placeOrderBtn.setForeground(Color.WHITE); // White text
         placeOrderBtn.setFont(new Font("Arial", Font.BOLD, 14));
         placeOrderBtn.setPreferredSize(new Dimension(150, 40));
         
@@ -84,12 +84,12 @@ public class CheckoutPanel extends JPanel {
         
         // Header
         JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        headerPanel.setBackground(new Color(240, 248, 255)); // Light blue
+        headerPanel.setBackground(new Color(255, 228, 196, 200)); // Translucent bisque
         headerPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
         
         JLabel headerLabel = new JLabel("💳 Checkout");
         headerLabel.setFont(new Font("Arial", Font.BOLD, 20));
-        headerLabel.setForeground(new Color(139, 69, 19)); // Brown
+        headerLabel.setForeground(new Color(255, 140, 0)); // Dark orange
         
         headerPanel.add(headerLabel);
         
@@ -169,7 +169,7 @@ public class CheckoutPanel extends JPanel {
     
     private JPanel createOrderSummaryPanel() {
         JPanel summaryPanel = new JPanel(new BorderLayout());
-        summaryPanel.setBackground(new Color(248, 248, 255)); // Lavender
+        summaryPanel.setBackground(new Color(255, 248, 240)); // Light orange-white
         summaryPanel.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1),
             BorderFactory.createEmptyBorder(20, 20, 20, 20)
@@ -192,8 +192,14 @@ public class CheckoutPanel extends JPanel {
     }
     
     private void setupEventHandlers() {
-        placeOrderBtn.addActionListener(e -> placeOrder());
-        backToCartBtn.addActionListener(e -> mainWindow.showCartPanel());
+        placeOrderBtn.addActionListener(e -> {
+            System.out.println("ACTION: Place Order clicked");
+            placeOrder();
+        });
+        backToCartBtn.addActionListener(e -> {
+            System.out.println("ACTION: Back to Cart clicked");
+            mainWindow.showCartPanel();
+        });
     }
     
     public void refreshDisplay() {

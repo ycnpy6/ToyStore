@@ -22,6 +22,10 @@ public class ToyStoreMainWindow extends JFrame {
     private CheckoutPanel checkoutPanel;
     private JLabel cartItemCountLabel;
     private JLabel cartTotalLabel;
+    // Navigation buttons (kept as fields so event wiring is reliable)
+    private JButton productsBtn;
+    private JButton cartBtn;
+    private JButton checkoutBtn;
     
     public ToyStoreMainWindow() {
         this.inventory = new ToyInventory();
@@ -74,31 +78,32 @@ public class ToyStoreMainWindow extends JFrame {
     
     private JPanel createHeaderPanel() {
         JPanel headerPanel = new JPanel(new BorderLayout());
-        headerPanel.setBackground(new Color(255, 182, 193)); // Light pink
+        headerPanel.setBackground(new Color(255, 140, 0, 200)); // Translucent dark orange
         headerPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
         
         // Title
         JLabel titleLabel = new JLabel("🎪 Toy Store 🎪");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 28));
-        titleLabel.setForeground(new Color(139, 69, 19)); // Brown
+        titleLabel.setForeground(new Color(255, 245, 238)); // Seashell white
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         
         // Navigation buttons
         JPanel navPanel = new JPanel(new FlowLayout());
         navPanel.setOpaque(false);
         
-        JButton productsBtn = new JButton("🛍️ Products");
-        JButton cartBtn = new JButton("🛒 Cart");
-        JButton checkoutBtn = new JButton("💳 Checkout");
+    // initialize navigation buttons as fields so we can wire listeners directly
+    productsBtn = new JButton("🛍️ Products");
+    cartBtn = new JButton("🛒 Cart");
+    checkoutBtn = new JButton("💳 Checkout");
         
         // Style navigation buttons
         styleNavigationButton(productsBtn);
         styleNavigationButton(cartBtn);
         styleNavigationButton(checkoutBtn);
         
-        navPanel.add(productsBtn);
-        navPanel.add(cartBtn);
-        navPanel.add(checkoutBtn);
+    navPanel.add(productsBtn);
+    navPanel.add(cartBtn);
+    navPanel.add(checkoutBtn);
         
         headerPanel.add(titleLabel, BorderLayout.CENTER);
         headerPanel.add(navPanel, BorderLayout.EAST);
@@ -108,7 +113,7 @@ public class ToyStoreMainWindow extends JFrame {
     
     private JPanel createFooterPanel() {
         JPanel footerPanel = new JPanel(new BorderLayout());
-        footerPanel.setBackground(new Color(255, 182, 193));
+        footerPanel.setBackground(new Color(255, 140, 0, 200)); // Translucent dark orange
         footerPanel.setBorder(BorderFactory.createEmptyBorder(5, 20, 5, 20));
         
         // Cart summary
@@ -126,27 +131,35 @@ public class ToyStoreMainWindow extends JFrame {
     }
     
     private void styleNavigationButton(JButton button) {
-        button.setBackground(new Color(255, 192, 203)); // Pink
-        button.setForeground(Color.BLACK);
+        button.setBackground(new Color(255, 127, 0)); // Darker orange
+        button.setForeground(Color.WHITE); // White text for better contrast
         button.setFont(new Font("Arial", Font.BOLD, 12));
-        button.setBorder(BorderFactory.createRaisedBevelBorder());
+        button.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(204, 85, 0), 1), // Darker border
+            BorderFactory.createEmptyBorder(4, 8, 4, 8)
+        ));
         button.setPreferredSize(new Dimension(120, 35));
     }
     
     private void setupEventHandlers() {
-        // Navigation button handlers
-        JButton productsBtn = findButton("🛍️ Products");
-        JButton cartBtn = findButton("🛒 Cart");
-        JButton checkoutBtn = findButton("💳 Checkout");
-        
+        // Navigation button handlers (directly wired to fields)
         if (productsBtn != null) {
-            productsBtn.addActionListener(e -> showProductsPanel());
+            productsBtn.addActionListener(e -> {
+                System.out.println("NAV: Products button clicked");
+                showProductsPanel();
+            });
         }
         if (cartBtn != null) {
-            cartBtn.addActionListener(e -> showCartPanel());
+            cartBtn.addActionListener(e -> {
+                System.out.println("NAV: Cart button clicked");
+                showCartPanel();
+            });
         }
         if (checkoutBtn != null) {
-            checkoutBtn.addActionListener(e -> showCheckoutPanel());
+            checkoutBtn.addActionListener(e -> {
+                System.out.println("NAV: Checkout button clicked");
+                showCheckoutPanel();
+            });
         }
     }
     
@@ -172,6 +185,9 @@ public class ToyStoreMainWindow extends JFrame {
         }
         return null;
     }
+
+    // NOTE: findButton/findButtonInPanel are kept for backward compatibility but
+    // not used anymore because we wire navigation buttons directly to fields.
     
     public void showProductsPanel() {
         cardLayout.show(mainPanel, "PRODUCTS");

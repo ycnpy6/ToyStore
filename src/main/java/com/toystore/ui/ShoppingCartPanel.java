@@ -43,8 +43,8 @@ public class ShoppingCartPanel extends JPanel {
         checkoutBtn.setPreferredSize(new Dimension(200, 40));
         
         clearCartBtn = new JButton("Clear Cart");
-        clearCartBtn.setBackground(new Color(220, 20, 60)); // Crimson
-        clearCartBtn.setForeground(Color.WHITE);
+        clearCartBtn.setBackground(new Color(204, 85, 0)); // Darker orange for better contrast
+        clearCartBtn.setForeground(Color.WHITE); // White text
         clearCartBtn.setFont(new Font("Arial", Font.BOLD, 12));
         clearCartBtn.setPreferredSize(new Dimension(120, 35));
     }
@@ -55,12 +55,12 @@ public class ShoppingCartPanel extends JPanel {
         
         // Header
         JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        headerPanel.setBackground(new Color(240, 248, 255)); // Light blue
+        headerPanel.setBackground(new Color(255, 228, 196, 200)); // Translucent bisque
         headerPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
         
         JLabel headerLabel = new JLabel("🛒 Shopping Cart");
         headerLabel.setFont(new Font("Arial", Font.BOLD, 20));
-        headerLabel.setForeground(new Color(139, 69, 19)); // Brown
+        headerLabel.setForeground(new Color(255, 140, 0)); // Dark orange
         
         headerPanel.add(headerLabel);
         
@@ -104,6 +104,7 @@ public class ShoppingCartPanel extends JPanel {
     private void setupEventHandlers() {
         checkoutBtn.addActionListener(e -> {
             if (!cart.isEmpty()) {
+                System.out.println("ACTION: Proceed to Checkout clicked");
                 mainWindow.showCheckoutPanel();
             } else {
                 JOptionPane.showMessageDialog(this, 
@@ -159,10 +160,10 @@ public class ShoppingCartPanel extends JPanel {
     private JPanel createCartItemPanel(CartItem item) {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1),
+            BorderFactory.createLineBorder(new Color(255, 140, 0), 1),
             BorderFactory.createEmptyBorder(10, 15, 10, 15)
         ));
-        panel.setBackground(Color.WHITE);
+        panel.setBackground(new Color(255, 245, 238)); // Seashell white
         panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 120));
         
         // Product info
@@ -220,6 +221,7 @@ public class ShoppingCartPanel extends JPanel {
                 cart.updateQuantity(item.getToy().getId(), item.getQuantity() - 1);
                 refreshDisplay();
                 mainWindow.updateCartDisplay();
+                System.out.println("ACTION: Decrement quantity for toyId=" + item.getToy().getId() + " newQty=" + (item.getQuantity()-1));
             }
         });
         
@@ -228,6 +230,7 @@ public class ShoppingCartPanel extends JPanel {
                 cart.updateQuantity(item.getToy().getId(), item.getQuantity() + 1);
                 refreshDisplay();
                 mainWindow.updateCartDisplay();
+                System.out.println("ACTION: Increment quantity for toyId=" + item.getToy().getId() + " newQty=" + (item.getQuantity()+1));
             } else {
                 JOptionPane.showMessageDialog(this, 
                     "Cannot add more items. Stock limit reached!", 
@@ -246,6 +249,7 @@ public class ShoppingCartPanel extends JPanel {
                 cart.removeItem(item.getToy().getId());
                 refreshDisplay();
                 mainWindow.updateCartDisplay();
+                System.out.println("ACTION: Removed item toyId=" + item.getToy().getId());
             }
         });
         

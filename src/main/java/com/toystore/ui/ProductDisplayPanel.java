@@ -5,7 +5,7 @@ import com.toystore.model.ShoppingCart;
 import com.toystore.model.Toy;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
+
 import java.util.List;
 import java.awt.Image;
 import javax.imageio.ImageIO;
@@ -58,7 +58,7 @@ public class ProductDisplayPanel extends JPanel {
         
         // Create filter panel
         JPanel filterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        filterPanel.setBackground(new Color(240, 248, 255)); // Light blue
+        filterPanel.setBackground(new Color(255, 228, 196, 200)); // Translucent bisque
         filterPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         
         filterPanel.add(new JLabel("Category:"));
@@ -135,10 +135,10 @@ public class ProductDisplayPanel extends JPanel {
     private JPanel createProductCard(Toy toy) {
         JPanel card = new JPanel(new BorderLayout());
         card.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1),
+            BorderFactory.createLineBorder(new Color(255, 140, 0, 180), 1),
             BorderFactory.createEmptyBorder(10, 10, 10, 10)
         ));
-        card.setBackground(Color.WHITE);
+        card.setBackground(new Color(255, 248, 240)); // Light orange-white
         card.setPreferredSize(new Dimension(300, 400));
         
         // Product image
@@ -184,8 +184,8 @@ public class ProductDisplayPanel extends JPanel {
         
         // Add to cart button
         JButton addToCartBtn = new JButton("Add to Cart");
-        addToCartBtn.setBackground(new Color(255, 182, 193)); // Light pink
-        addToCartBtn.setForeground(Color.BLACK);
+        addToCartBtn.setBackground(new Color(204, 85, 0)); // Darker orange for better contrast
+        addToCartBtn.setForeground(Color.WHITE); // White text
         addToCartBtn.setFont(new Font("Arial", Font.BOLD, 12));
         addToCartBtn.setEnabled(toy.getStockQuantity() > 0);
         
@@ -218,13 +218,32 @@ public class ProductDisplayPanel extends JPanel {
             String imagePath = toy.getImagePath();
             if (imagePath != null && !imagePath.isEmpty()) {
                 File imageFile = new File(imagePath);
+                Image originalImage = null;
                 if (imageFile.exists()) {
-                    Image originalImage = ImageIO.read(imageFile);
+                    originalImage = ImageIO.read(imageFile);
+                } else {
+                    // Try a base64 placeholder next to the expected image (image.jpg.b64)
+                    File b64File = new File(imagePath + ".b64");
+                    if (b64File.exists()) {
+                        try {
+                            System.out.println("INFO: Decoding base64 image for " + imagePath);
+                            byte[] b64bytes = java.nio.file.Files.readAllBytes(b64File.toPath());
+                            String b64 = new String(b64bytes).trim();
+                            byte[] imgBytes = java.util.Base64.getDecoder().decode(b64);
+                            originalImage = ImageIO.read(new java.io.ByteArrayInputStream(imgBytes));
+                        } catch (Exception ex) {
+                            System.out.println("WARN: Failed to decode base64 image for " + imagePath + " -> " + ex.getMessage());
+                            originalImage = null;
+                        }
+                    }
+                }
+
+                if (originalImage != null) {
                     // Scale the image to fit the label size while maintaining aspect ratio
                     Image scaledImage = originalImage.getScaledInstance(280, 150, Image.SCALE_SMOOTH);
                     imageLabel.setIcon(new ImageIcon(scaledImage));
                 } else {
-                    // Image file doesn't exist, show placeholder
+                    // Image file doesn't exist or could not be read, show placeholder
                     imageLabel.setText("🪀");
                     imageLabel.setFont(new Font("Arial", Font.PLAIN, 48));
                 }
@@ -243,15 +262,17 @@ public class ProductDisplayPanel extends JPanel {
     }
     
     private void addToCart(Toy toy) {
+        System.out.println("ACTION: Add to Cart clicked for toy id=" + toy.getId() + " name=\"" + toy.getName() + "\"");
         if (toy.getStockQuantity() > 0) {
             cart.addItem(toy, 1);
             mainWindow.updateCartDisplay();
-            
+            System.out.println("STATE: Item added to cart. Cart total items=" + cart.getTotalItems() + " totalPrice=" + cart.getTotalPrice());
             JOptionPane.showMessageDialog(this, 
                 toy.getName() + " added to cart!", 
                 "Success", 
                 JOptionPane.INFORMATION_MESSAGE);
         } else {
+            System.out.println("WARN: Attempted to add out-of-stock item id=" + toy.getId());
             JOptionPane.showMessageDialog(this, 
                 "Sorry, this item is out of stock!", 
                 "Out of Stock", 

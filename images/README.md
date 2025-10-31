@@ -2,25 +2,32 @@
 
 This directory contains product images for the toy store application.
 
-## Required Images
+## Placeholder images included
 
-The following image files should be placed in this directory:
+The repository includes small placeholder images encoded in base64 (`*.jpg.b64`).
+Run the decode script to generate usable image files in this directory.
 
-1. `lego_classic.jpg` - LEGO Classic Creative Box
-2. `barbie_dreamhouse.jpg` - Barbie Dreamhouse
-3. `hotwheels_track.jpg` - Hot Wheels Track Set
-4. `nerf_blaster.jpg` - Nerf Blaster
-5. `wooden_puzzle.jpg` - Educational Puzzle Set
-6. `rc_car.jpg` - Remote Control Car
-7. `art_kit.jpg` - Art Supplies Kit
-8. `board_games.jpg` - Board Game Collection
+### How to decode (Windows PowerShell / pwsh)
 
-## Image Specifications
+From the project root run:
 
-- Format: JPG or PNG
-- Recommended size: 400x300 pixels or similar aspect ratio
-- The application will automatically scale images to fit the display (280x150 pixels)
+```powershell
+scripts\decode_images.ps1
+```
+
+This will decode the included base64 files and produce the following files in `images/`:
+
+- `lego_classic.jpg`
+- `barbie_dreamhouse.jpg`
+- `hotwheels_track.jpg`
+- `nerf_blaster.jpg`
+- `wooden_puzzle.jpg`
+- `rc_car.jpg`
+- `art_kit.jpg`
+- `board_games.jpg`
+
+These placeholders are minimal images so the UI can display something. Replace them with real product images (JPG/PNG) with recommended size ~400x300 for best display.
 
 ## Fallback Behavior
 
-If an image file is missing or cannot be loaded, the application will display a toy emoji (🪀) as a placeholder.
+If an image file is still missing or cannot be loaded, the application will display a toy emoji (🪀) as a placeholder.
