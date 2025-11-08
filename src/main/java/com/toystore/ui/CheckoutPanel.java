@@ -66,16 +66,36 @@ public class CheckoutPanel extends JPanel {
         
         // Initialize buttons
         placeOrderBtn = new JButton("Place Order");
-        placeOrderBtn.setBackground(new Color(204, 85, 0)); // Darker orange for better contrast
-        placeOrderBtn.setForeground(Color.WHITE); // White text
+        placeOrderBtn.setUI(new javax.swing.plaf.basic.BasicButtonUI());
+        placeOrderBtn.setOpaque(true);
+        placeOrderBtn.setContentAreaFilled(true);
+        placeOrderBtn.setBorderPainted(true);
+        placeOrderBtn.setFocusPainted(false);
+        placeOrderBtn.setBackground(new Color(204, 85, 0)); // Orange
+        placeOrderBtn.setForeground(Color.WHITE);
         placeOrderBtn.setFont(new Font("Arial", Font.BOLD, 14));
         placeOrderBtn.setPreferredSize(new Dimension(150, 40));
+        placeOrderBtn.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(153, 64, 0), 1),
+            BorderFactory.createEmptyBorder(4, 10, 4, 10)
+        ));
+        placeOrderBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         
         backToCartBtn = new JButton("Back to Cart");
+        backToCartBtn.setUI(new javax.swing.plaf.basic.BasicButtonUI());
+        backToCartBtn.setOpaque(true);
+        backToCartBtn.setContentAreaFilled(true);
+        backToCartBtn.setBorderPainted(true);
+        backToCartBtn.setFocusPainted(false);
         backToCartBtn.setBackground(new Color(70, 130, 180)); // Steel blue
         backToCartBtn.setForeground(Color.WHITE);
         backToCartBtn.setFont(new Font("Arial", Font.BOLD, 12));
         backToCartBtn.setPreferredSize(new Dimension(120, 35));
+        backToCartBtn.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(52, 98, 136), 1),
+            BorderFactory.createEmptyBorder(4, 8, 4, 8)
+        ));
+        backToCartBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }
     
     private void setupLayout() {

@@ -131,14 +131,21 @@ public class ToyStoreMainWindow extends JFrame {
     }
     
     private void styleNavigationButton(JButton button) {
-        button.setBackground(new Color(255, 127, 0)); // Darker orange
-        button.setForeground(Color.WHITE); // White text for better contrast
+        // Force basic UI to respect background/foreground
+        button.setUI(new javax.swing.plaf.basic.BasicButtonUI());
+        button.setOpaque(true);
+        button.setContentAreaFilled(true);
+        button.setBorderPainted(true);
+        button.setFocusPainted(false);
+        button.setBackground(new Color(204, 85, 0)); // Darker orange
+        button.setForeground(Color.WHITE); // High contrast text
         button.setFont(new Font("Arial", Font.BOLD, 12));
         button.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(204, 85, 0), 1), // Darker border
+            BorderFactory.createLineBorder(new Color(153, 64, 0), 1), // Darker border
             BorderFactory.createEmptyBorder(4, 8, 4, 8)
         ));
         button.setPreferredSize(new Dimension(120, 35));
+        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }
     
     private void setupEventHandlers() {

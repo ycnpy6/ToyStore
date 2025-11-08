@@ -184,9 +184,19 @@ public class ProductDisplayPanel extends JPanel {
         
         // Add to cart button
         JButton addToCartBtn = new JButton("Add to Cart");
-        addToCartBtn.setBackground(new Color(204, 85, 0)); // Darker orange for better contrast
-        addToCartBtn.setForeground(Color.WHITE); // White text
+        addToCartBtn.setUI(new javax.swing.plaf.basic.BasicButtonUI());
+        addToCartBtn.setOpaque(true);
+        addToCartBtn.setContentAreaFilled(true);
+        addToCartBtn.setBorderPainted(true);
+        addToCartBtn.setFocusPainted(false);
+        addToCartBtn.setBackground(new Color(204, 85, 0)); // Darker orange
+        addToCartBtn.setForeground(Color.WHITE); // Contrast
         addToCartBtn.setFont(new Font("Arial", Font.BOLD, 12));
+        addToCartBtn.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(153, 64, 0), 1),
+            BorderFactory.createEmptyBorder(4, 8, 4, 8)
+        ));
+        addToCartBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         addToCartBtn.setEnabled(toy.getStockQuantity() > 0);
         
         addToCartBtn.addActionListener(e -> addToCart(toy));

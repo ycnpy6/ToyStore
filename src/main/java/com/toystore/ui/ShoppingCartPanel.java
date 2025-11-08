@@ -4,8 +4,6 @@ import com.toystore.model.CartItem;
 import com.toystore.model.ShoppingCart;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * Panel for displaying and managing the shopping cart
@@ -37,16 +35,36 @@ public class ShoppingCartPanel extends JPanel {
         totalLabel.setForeground(new Color(0, 128, 0)); // Green
         
         checkoutBtn = new JButton("Proceed to Checkout");
+        checkoutBtn.setUI(new javax.swing.plaf.basic.BasicButtonUI());
+        checkoutBtn.setOpaque(true);
+        checkoutBtn.setContentAreaFilled(true);
+        checkoutBtn.setBorderPainted(true);
+        checkoutBtn.setFocusPainted(false);
         checkoutBtn.setBackground(new Color(0, 128, 0)); // Green
         checkoutBtn.setForeground(Color.WHITE);
         checkoutBtn.setFont(new Font("Arial", Font.BOLD, 14));
         checkoutBtn.setPreferredSize(new Dimension(200, 40));
+        checkoutBtn.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(0, 100, 0), 1),
+            BorderFactory.createEmptyBorder(4, 10, 4, 10)
+        ));
+        checkoutBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         
         clearCartBtn = new JButton("Clear Cart");
-        clearCartBtn.setBackground(new Color(204, 85, 0)); // Darker orange for better contrast
-        clearCartBtn.setForeground(Color.WHITE); // White text
+        clearCartBtn.setUI(new javax.swing.plaf.basic.BasicButtonUI());
+        clearCartBtn.setOpaque(true);
+        clearCartBtn.setContentAreaFilled(true);
+        clearCartBtn.setBorderPainted(true);
+        clearCartBtn.setFocusPainted(false);
+        clearCartBtn.setBackground(new Color(204, 85, 0)); // Orange
+        clearCartBtn.setForeground(Color.WHITE);
         clearCartBtn.setFont(new Font("Arial", Font.BOLD, 12));
         clearCartBtn.setPreferredSize(new Dimension(120, 35));
+        clearCartBtn.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(153, 64, 0), 1),
+            BorderFactory.createEmptyBorder(4, 8, 4, 8)
+        ));
+        clearCartBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }
     
     private void setupLayout() {
@@ -189,9 +207,11 @@ public class ShoppingCartPanel extends JPanel {
         JPanel quantityPanel = new JPanel(new FlowLayout());
         quantityPanel.setBackground(Color.WHITE);
         
-        JButton minusBtn = new JButton("-");
-        minusBtn.setPreferredSize(new Dimension(30, 30));
-        minusBtn.setFont(new Font("Arial", Font.BOLD, 12));
+    JButton minusBtn = new JButton("-");
+    minusBtn.setPreferredSize(new Dimension(30, 30));
+    minusBtn.setFont(new Font("Arial", Font.BOLD, 12));
+    minusBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    minusBtn.setFocusPainted(false);
         
         JLabel quantityLabel = new JLabel(String.valueOf(item.getQuantity()));
         quantityLabel.setFont(new Font("Arial", Font.BOLD, 14));
@@ -202,12 +222,24 @@ public class ShoppingCartPanel extends JPanel {
         JButton plusBtn = new JButton("+");
         plusBtn.setPreferredSize(new Dimension(30, 30));
         plusBtn.setFont(new Font("Arial", Font.BOLD, 12));
+        plusBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        plusBtn.setFocusPainted(false);
         
         JButton removeBtn = new JButton("Remove");
-        removeBtn.setBackground(new Color(220, 20, 60)); // Crimson
+        removeBtn.setUI(new javax.swing.plaf.basic.BasicButtonUI());
+        removeBtn.setOpaque(true);
+        removeBtn.setContentAreaFilled(true);
+        removeBtn.setBorderPainted(true);
+        removeBtn.setFocusPainted(false);
+        removeBtn.setBackground(new Color(204, 85, 0));
         removeBtn.setForeground(Color.WHITE);
         removeBtn.setFont(new Font("Arial", Font.BOLD, 10));
         removeBtn.setPreferredSize(new Dimension(80, 30));
+        removeBtn.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(153, 64, 0), 1),
+            BorderFactory.createEmptyBorder(2, 6, 2, 6)
+        ));
+        removeBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         
         quantityPanel.add(minusBtn);
         quantityPanel.add(quantityLabel);
